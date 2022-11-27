@@ -42,4 +42,8 @@ export class UsuarioDto {
   @IsNotEmpty()
   @ApiProperty()
   confimarSenha: string;
+
+  @ApiProperty()
+  @IsString()
+  role:string;
 }

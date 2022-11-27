@@ -7,22 +7,15 @@ export class UsuarioService {
   private usuarios: MeuUsuario[] = [];
 
   async criarUsuario(usuario: UsuarioDto): Promise<MeuUsuario> {
-    // aqui ele esta gerando um id ao usuario
     const endidadeUsuario = { ...usuario, id: randomUUID() };
-    // aqui ele esta enviando os dados
     this.usuarios.push(endidadeUsuario);
-    //aqui ele esta retornando os dados
     return endidadeUsuario;
   }
 
   async atualizarUsuario(usuarioData: UsuarioParcialDto): Promise<MeuUsuario> {
-    // aqui ele esta varrendo os usuarios
     this.usuarios.map((usuario, index) => {
-      //compara o id do usuario procurado
       if (usuario.id === usuarioData.id) {
-        // traz as informaçoes do usuario
         const AtualizarUsuario = Object.assign(usuario, usuarioData);
-        // faz a atualização
         this.usuarios.splice(index, 1, AtualizarUsuario);
       }
     });
@@ -36,8 +29,20 @@ export class UsuarioService {
     return this.usuarios;
   }
 
+  async usuarioPorId(usuarioId: string): Promise<MeuUsuario> {
+    const existUsuario = this.usuarios.find(
+      (usuario) => usuario.id === usuarioId,
+    );
+    if (!existUsuario) {
+      throw new Error('Usuario não encontrado');
+    }
+    return existUsuario;
+  }
+
   async deletarUsuarioId(usuarioId: string): Promise<boolean> {
-    const existUsuario = this.usuarios.find((u) => u.id == usuarioId);
+    const existUsuario = this.usuarios.find(
+      (usuario) => usuario.id == usuarioId,
+    );
     if (!existUsuario) {
       return false;
     }
@@ -47,15 +52,5 @@ export class UsuarioService {
       }
     });
     return true;
-  }
-
-  async usuarioPorId(usuarioId: string): Promise<MeuUsuario> {
-    const existUsuario = this.usuarios.find(
-      (usuario) => usuario.id === usuarioId,
-    );
-    if (!existUsuario) {
-      throw new Error('Usuario não encontrado');
-    }
-    return existUsuario;
   }
 }

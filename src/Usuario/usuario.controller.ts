@@ -45,6 +45,7 @@ export class UsuarioController {
       estado,
       senha,
       confimarSenha,
+      role
     }: UsuarioDto,
     @Res() response: Response,
   ) {
@@ -54,10 +55,11 @@ export class UsuarioController {
         usuario,
         cpf,
         dataNacimento,
-        email,
         estado,
+        email,
         senha,
         confimarSenha,
+        role,
       });
       response.status(201).send(result);
     } catch (err) {
