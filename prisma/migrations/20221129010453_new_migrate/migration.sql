@@ -4,8 +4,6 @@ CREATE TABLE "Usuario" (
     "nomeCompleto" TEXT NOT NULL,
     "usuario" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
-    "dataNacimento" TEXT NOT NULL,
-    "estado" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senha" TEXT NOT NULL,
     "role" TEXT NOT NULL,

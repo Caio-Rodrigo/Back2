@@ -1,56 +1,50 @@
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { MeuUsuario } from './entities/usuario.entity';
+import { RepositorioUsuario } from './user.repository';
 import { UsuarioDto } from './UsuarioDto/Usuario.dto';
 import { UsuarioParcialDto } from './UsuarioDto/ususarioParcial.Dto';
 
+@Injectable()
 export class UsuarioService {
-  private usuarios: MeuUsuario[] = [];
+  constructor(private readonly repositorioDoUsuario: RepositorioUsuario) {}
 
   async criarUsuario(usuario: UsuarioDto): Promise<MeuUsuario> {
     const endidadeUsuario = { ...usuario, id: randomUUID() };
-    this.usuarios.push(endidadeUsuario);
-    return endidadeUsuario;
+    const usuarioCriado = await this.repositorioDoUsuario.criarUsuario(
+      endidadeUsuario,
+    );
+    return usuarioCriado;
   }
 
   async atualizarUsuario(usuarioData: UsuarioParcialDto): Promise<MeuUsuario> {
-    this.usuarios.map((usuario, index) => {
-      if (usuario.id === usuarioData.id) {
-        const AtualizarUsuario = Object.assign(usuario, usuarioData);
-        this.usuarios.splice(index, 1, AtualizarUsuario);
-      }
-    });
-    const usuarioAtuazado = this.usuarios.find(
-      (usuario) => usuario.id === usuarioData.id,
+    const atualizarUsuario = await this.repositorioDoUsuario.atualizarUsuario(
+      usuarioData,
     );
-    return usuarioAtuazado;
+    return atualizarUsuario;
   }
 
   async todosUsuarios(): Promise<MeuUsuario[]> {
-    return this.usuarios;
+    return await this.repositorioDoUsuario.buscarTodosuarios();
   }
 
   async usuarioPorId(usuarioId: string): Promise<MeuUsuario> {
-    const existUsuario = this.usuarios.find(
-      (usuario) => usuario.id === usuarioId,
-    );
-    if (!existUsuario) {
-      throw new Error('Usuario não encontrado');
-    }
-    return existUsuario;
+    const buscarUsuario =
+      this.repositorioDoUsuario.buscarUsuarioPorId(usuarioId);
+    return buscarUsuario;
   }
 
   async deletarUsuarioId(usuarioId: string): Promise<boolean> {
-    const existUsuario = this.usuarios.find(
-      (usuario) => usuario.id == usuarioId,
-    );
-    if (!existUsuario) {
+    try {
+      const existeUsuario = this.repositorioDoUsuario.deletarUsuario(usuarioId);
+      if (existeUsuario) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
       return false;
     }
-    this.usuarios.map((usuario, index) => {
-      if (usuario.id === usuarioId) {
-        this.usuarios.slice(index, 1);
-      }
-    });
-    return true;
   }
 }

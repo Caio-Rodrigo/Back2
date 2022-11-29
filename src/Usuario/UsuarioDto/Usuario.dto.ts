@@ -18,16 +18,6 @@ export class UsuarioDto {
   cpf: string;
 
   @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  dataNacimento: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  estado: string;
-
-  @IsString()
   @IsEmail()
   @ApiProperty()
   @IsNotEmpty()
@@ -38,10 +28,6 @@ export class UsuarioDto {
   @ApiProperty()
   senha: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  confimarSenha: string;
 
   @ApiProperty()
   @IsString()

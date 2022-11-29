@@ -41,10 +41,7 @@ export class UsuarioController {
       email,
       nomeCompleto,
       usuario,
-      dataNacimento,
-      estado,
       senha,
-      confimarSenha,
       role
     }: UsuarioDto,
     @Res() response: Response,
@@ -54,11 +51,8 @@ export class UsuarioController {
         nomeCompleto,
         usuario,
         cpf,
-        dataNacimento,
-        estado,
         email,
         senha,
-        confimarSenha,
         role,
       });
       response.status(201).send(result);
