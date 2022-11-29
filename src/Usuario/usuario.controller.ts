@@ -15,7 +15,7 @@ import { UsuarioDto } from './UsuarioDto/Usuario.dto';
 import { Response } from 'express';
 import { UsuarioParcialDto } from './UsuarioDto/ususarioParcial.Dto';
 
-@Controller()
+@Controller('usuario')
 export class UsuarioController {
   constructor(private readonly service: UsuarioService) {}
 
