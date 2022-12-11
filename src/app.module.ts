@@ -1,4 +1,4 @@
-import { AutenticacaoModule } from './auth/autenticacao.module';
+import { AuthModule } from './auth/autenticacao.module';
 import { AutenticacaoService } from './auth/autenticacao.service';
 import EmpresaController from './Empresa/empresa.controller';
 import { EmpresaService } from './Empresa/Services/empresa.service';
@@ -10,7 +10,7 @@ import { DatabasesModule } from './prisma/database.module';
 import { RepositorioUsuario } from './Usuario/user.repository';
 
 @Module({
-  imports: [AutenticacaoModule, DatabasesModule],
+  imports: [AuthModule, DatabasesModule],
   controllers: [EmpresaController, UsuarioController],
   providers: [
     AutenticacaoService,

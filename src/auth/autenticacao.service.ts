@@ -15,7 +15,7 @@ export class AutenticacaoService {
   ) {}
 
   async ValidarUsuario({ email, senha }: UsuarioLoginDto) {
-    const usuario = await this.usuarioService.findUserByEmail(email);
+    const usuario = await this.usuarioService.buscarUsuarioPorEmail(email);
 
     const senhaValida = await compare(senha, usuario.senha);
     if (!senhaValida) {
@@ -28,7 +28,7 @@ export class AutenticacaoService {
       token: this.jwtService.sign({
         email: usuario.email,
         id: usuario.id,
-        nome: usuario.nome,
+        nome: usuario.nomeCompleto,
         role: usuario.role,
       }),
       usuario,
@@ -36,7 +36,7 @@ export class AutenticacaoService {
   }
 
   async getUser(email: string): Promise<MeuUsuario> {
-    const usuario = await this.usuarioService.findUserByEmail(email);
+    const usuario = await this.usuarioService.buscarUsuarioPorEmail(email)
     return usuario;
   }
 }
