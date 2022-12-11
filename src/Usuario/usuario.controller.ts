@@ -10,10 +10,10 @@ import {
   Res,
 } from '@nestjs/common';
 import { MeuUsuario } from './entities/usuario.entity';
-import { UsuarioService } from './usuario.service';
-import { UsuarioDto } from './UsuarioDto/Usuario.dto';
+import { UsuarioService } from './service/usuario.service';
+import { UsuarioDto } from './service/UsuarioDto/Usuario.dto';
 import { Response } from 'express';
-import { UsuarioParcialDto } from './UsuarioDto/ususarioParcial.Dto';
+import { UsuarioParcialDto } from './service/UsuarioDto/ususarioParcial.Dto';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -36,14 +36,7 @@ export class UsuarioController {
   @Post()
   async criarUsuario(
     @Body()
-    {
-      cpf,
-      email,
-      nomeCompleto,
-      usuario,
-      senha,
-      role
-    }: UsuarioDto,
+    { cpf, email, nomeCompleto, usuario, senha, role }: UsuarioDto,
     @Res() response: Response,
   ) {
     try {

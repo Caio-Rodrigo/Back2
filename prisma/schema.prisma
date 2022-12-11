@@ -11,13 +11,26 @@ datasource db {
 }
 
 model Usuario {
-  id            String   @id @unique
-  nomeCompleto  String
-  usuario       String   @unique
-  cpf           String   @unique 
-  email         String   @unique
-  senha         String
-  role          String
-  createdAt DateTime @default(now())
-  UpdatedAt DateTime @updatedAt
+  id           String   @id @unique
+  nomeCompleto String
+  usuario      String   @unique
+  cpf          String   @unique
+  email        String   @unique
+  senha        String
+  role         String
+  createdAt    DateTime @default(now())
+  UpdatedAt    DateTime @updatedAt
 }
+
+model Empresa {
+  id           String   @id @unique
+  nomeEmpresa  String
+  nomeFantasia String   @unique
+  cnpj         String   @unique
+  email        String   @unique
+  senha        String
+  role         String
+  createdAt    DateTime @default(now())
+  UpdatedAt    DateTime @updatedAt
+}
+
