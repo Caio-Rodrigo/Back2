@@ -30,5 +30,5 @@ export class EmpresaDto {
 
   @ApiProperty()
   @IsString()
-  role: string;
+  role?: string;
 }

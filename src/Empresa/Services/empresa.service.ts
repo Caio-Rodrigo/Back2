@@ -16,7 +16,7 @@ export class EmpresaService {
     const endidadeEmpresa: MinhaEmpresa = {
       ...Empresa,
       id: randomUUID(),
-      role: 'epresa',
+      role: 'empresa',
     };
     if (Empresa.senha.length <= 7) {
       throw new Execao(
