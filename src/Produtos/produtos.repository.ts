@@ -32,9 +32,34 @@ export class RepositorioDeProdutos {
     }
   }
 
-  async deletarProduto(id:string):Promise<MeuProduto> {
-    try{
-      const produtoDeletado = 
+  async deletarProduto(id: string): Promise<MeuProduto> {
+    try {
+      const produtoDeletado = await this.prisma.produto.deletarProduto({
+        where: { id: id },
+      });
+      return produtoDeletado;
+    } catch (err) {
+      throw new Execao(Execoes.DatabaseException, 'Produto não encontrado');
+    }
+  }
+
+  async buscarTodosProdutos(): Promise<MeuProduto[]> {
+    try {
+      const todosProdutos = await this.prisma.produto.buscarTodosProdutos();
+      return todosProdutos;
+    } catch (err) {
+      throw new Execao(Execoes.DatabaseException);
+    }
+  }
+
+  async buscarProdutoPorId(id: string): Promise<MeuProduto> {
+    try {
+      const produtoEncontrado = await this.prisma.produto.buscarProdutoPorId({
+        where: { id: id },
+      });
+      return produtoEncontrado;
+    } catch (err) {
+      throw new Execao(Execoes.DatabaseException);
     }
   }
 }

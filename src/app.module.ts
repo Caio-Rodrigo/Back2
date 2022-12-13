@@ -4,8 +4,15 @@ import { AuthModule } from './auth/autenticacao.module';
 
 import { Module } from '@nestjs/common';
 import { DatabasesModule } from './prisma/database.module';
+import { ProdutoModule } from './Produtos/produto.module';
 
 @Module({
-  imports: [EmpresaModule, UsuarioModule, AuthModule, DatabasesModule],
+  imports: [
+    EmpresaModule,
+    UsuarioModule,
+    AuthModule,
+    DatabasesModule,
+    ProdutoModule,
+  ],
 })
 export class AppModule {}
