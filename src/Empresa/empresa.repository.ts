@@ -4,14 +4,25 @@ import { Execao } from 'src/utils/execoes/execoes';
 import { Execoes } from 'src/utils/execoes/execoesDeAjuda';
 import { EmpresaParcialDto } from './Services/Dto/EmpresaParcial.Dto';
 import { MinhaEmpresa } from './entities/empresa.entity';
+import { EmpresaDto } from './Services/Dto/Empresa.dto';
 
 @Injectable()
 export class RepositorioDaEmpresa {
   constructor(private readonly prisma: PrismaService) {}
 
-  async criarEmpresa(empresa: MinhaEmpresa): Promise<MinhaEmpresa> {
+  async criarEmpresa({nomeEmpresa,nomeFantasia,cnpj,email,senha,role,produto}:EmpresaDto, id:string): Promise<MinhaEmpresa> {
     try {
-      const CriarEmpresa = await this.prisma.empresa.create({ data: empresa });
+      const CriarEmpresa = await this.prisma.empresa.create({ data:{
+        id:id,
+        nomeEmpresa:nomeEmpresa,
+        nomeFantasia:nomeFantasia,
+        cnpj:cnpj,
+        email:email,
+        senha:senha,
+        role:role,
+        produto:produto,
+
+      }  });
       return CriarEmpresa;
     } catch (err) {
       throw new Execao(

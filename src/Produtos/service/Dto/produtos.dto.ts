@@ -17,4 +17,9 @@ export class ProdutosDto{
   @IsNotEmpty()
   @ApiProperty()
   empresa:string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  role?:string;
 }

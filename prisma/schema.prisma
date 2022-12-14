@@ -29,13 +29,13 @@ model Empresa {
   role         String
   createdAt    DateTime @default(now())
   UpdatedAt    DateTime @updatedAt
-  Produto      Produto? @relation(fields: [produtoId], references: [id])
-  produtoId    Int?
+  produto      Produto?  @relation(fields: [produtoId], references: [id])
+  produtoId    Int
 }
 
 model Produto {
-  id      Int       @id @unique
-  cod     Int       @unique @default(autoincrement()) 
+  id      Int    @id @unique
+  cod     Int       @unique @default(autoincrement())
   produto String
   empresa Empresa[]
 }

@@ -1,18 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { identity } from 'rxjs';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Execao } from 'src/utils/execoes/execoes';
 import { Execoes } from 'src/utils/execoes/execoesDeAjuda';
 import { MeuProduto } from './entities/produtos.entity';
 import { ProdutoParcialDto } from './service/Dto/produtoParcial.dto';
+import { ProdutosDto } from './service/Dto/produtos.dto';
 
 @Injectable()
 export class RepositorioDeProdutos {
   constructor(private readonly prisma: PrismaService) {}
 
-  async criarProduto(produto: MeuProduto): Promise<MeuProduto> {
+  async criarProduto({produto,cod,empresa,role}:ProdutosDto, id:number): Promise<MeuProduto> {
+    
     try {
-      const criarProduto = await this.prisma.produto.criarProduto({
-        data: produto,
+      const criarProduto = await this.prisma.produto.create({
+        data: {
+          id: id,
+          produto:produto,
+          cod:cod,
+          empresa:empresa,
+          role:role
+
+        }
       });
       return criarProduto;
     } catch (err) {
@@ -22,8 +33,8 @@ export class RepositorioDeProdutos {
 
   async atualizarProdutos(produto: ProdutoParcialDto): Promise<MeuProduto> {
     try {
-      const ProdutoAtualizado = await this.prisma.produto.atualizarProdutos({
-        where: { id: produto.id || produto.cod },
+      const ProdutoAtualizado = await this.prisma.produto.update({
+        where: { id: produto.id },
         data: produto,
       });
       return ProdutoAtualizado;
@@ -34,7 +45,7 @@ export class RepositorioDeProdutos {
 
   async deletarProduto(id: string): Promise<MeuProduto> {
     try {
-      const produtoDeletado = await this.prisma.produto.deletarProduto({
+      const produtoDeletado = await this.prisma.produto.delete({
         where: { id: id },
       });
       return produtoDeletado;
@@ -45,7 +56,7 @@ export class RepositorioDeProdutos {
 
   async buscarTodosProdutos(): Promise<MeuProduto[]> {
     try {
-      const todosProdutos = await this.prisma.produto.buscarTodosProdutos();
+      const todosProdutos = await this.prisma.produto.findMany();
       return todosProdutos;
     } catch (err) {
       throw new Execao(Execoes.DatabaseException);
@@ -54,7 +65,7 @@ export class RepositorioDeProdutos {
 
   async buscarProdutoPorId(id: string): Promise<MeuProduto> {
     try {
-      const produtoEncontrado = await this.prisma.produto.buscarProdutoPorId({
+      const produtoEncontrado = await this.prisma.produto.findUniqueOrThrow({
         where: { id: id },
       });
       return produtoEncontrado;

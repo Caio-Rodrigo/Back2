@@ -28,7 +28,14 @@ export class EmpresaDto {
   @ApiProperty()
   senha: string;
 
-  @ApiProperty()
   @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
   role?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  produto?: string;
+
 }
